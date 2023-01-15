@@ -59,3 +59,5 @@ document.addEventListener("keydown", (e) => {
     menu.toggle();
   }
 });
+
+startScene("KeyboardMouse");
