@@ -1,0 +1,54 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint",
+        "prettier"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    "rules": {
+        "prettier/prettier": "error",
+        "camelcase": "warn",
+        "curly": "error",
+        "dot-notation": "error",
+        "eqeqeq": "error",
+        "new-cap": "error",
+        "no-implicit-coercion": "error",
+        "no-nested-ternary": "error",
+        "no-undefined": "error",
+        "no-unneeded-ternary": "error",
+        "no-var": "error",
+        "prefer-object-spread": "error",
+        "prefer-template": "error",
+        "require-await": "error",
+        "prefer-rest-params": "error",
+        "spaced-comment": [
+            "error",
+            "always"
+        ],
+        "init-declarations": [
+            "error",
+            "always"
+        ],
+        "class-methods-use-this": "warn",
+        "max-lines-per-function": [
+            "warn",
+            100
+        ],
+        "max-lines": [
+            "warn",
+            1000
+        ],
+        "max-depth": [
+            "warn",
+            4
+        ],
+        "no-unused-expressions": "warn",
+        "prefer-destructuring": "warn"
+    }
+}
