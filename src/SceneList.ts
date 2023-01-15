@@ -1,5 +1,6 @@
 export const Scenes = {
-  KeyboardMouse: "KeyboardMouse"
+  KeyboardMouse: "KeyboardMouse",
+  GamepadScene: "GamepadScene"
 } as const;
 
 export type SceneName = keyof typeof Scenes;
