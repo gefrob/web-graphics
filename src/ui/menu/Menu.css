@@ -1,133 +1,125 @@
 #menu {
-  --togle-size: 3rem;
-  --toggle-padding: 0.3rem;
-  --toggle-line-height: 0.25rem;
-  --border-radius: 0.5rem;
+  --sin45: 0.707;
+  --opacity1: 0.15;
+  --opacity2: 0.8;
+
   width: 100%;
   height: 100%;
   display: grid;
-  grid: var(--togle-size) auto / var(--togle-size) auto;
+  grid-template-columns: var(--size) auto;
+  grid-template-rows: var(--size) auto;
 }
 
-#toggle {
-  z-index: 1;
-  grid-row: 1 / 2;
-  grid-column: 1 / 2;
-  padding: var(--toggle-padding);
-  border-radius: var(--border-radius);
-  background-color: rgb(211, 210, 210);
+@supports (width: calc((sin(45deg)) * 1px)) {
+  #menu {
+    --sin45: calc(sin(45deg));
+  }
 }
 
 .list {
   --x-pos: 0;
   --y-pos: 0;
+
   box-sizing: border-box;
   grid-row: 1 / 3;
   grid-column: 1 / 3;
-  overflow-y: auto;
   margin: 0;
-  padding: var(--togle-size);
-  transition: transform 0.5s;
-  -webkit-backdrop-filter: blur(8px); /* Safari */
-  backdrop-filter: blur(8px);
-  box-shadow: 0px 10px 15px 10px rgba(149, 149, 149, 0.1);
-  background-color: rgb(45 45 45 / 15%);
+  padding: var(--size);
+  overflow-y: auto;
+  -webkit-backdrop-filter: blur(var(--line)); /* Safari */
+  backdrop-filter: blur(var(--line));
   background: radial-gradient(
     circle at calc(var(--x-pos) * 1px) calc(var(--y-pos) * 1px),
-    rgba(200, 255, 0, 0.151),
-    rgba(45, 45, 255, 0.055)
+    rgb(var(--color3-r), var(--color3-r), var(--color3-r), var(--opacity2)),
+    rgb(var(--color2-r), var(--color2-r), var(--color2-r), var(--opacity2))
   );
+  transition: transform 0.5s;
+  z-index: 1;
 }
 
-.invis-checkbox {
-  opacity: 0;
-  top: 0;
-  left: 0;
-  margin: 0;
-  position: absolute;
-  z-index: 3;
-  width: var(--togle-size);
-  height: var(--togle-size);
+::-webkit-scrollbar {
+  width: var(--line);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color4);
 }
 
 .selected {
-  list-style-type: disc;
+  list-style-type: square;
 }
 
 li {
+  box-sizing: border-box;
+  padding: var(--dline);
   list-style-type: none;
-  padding: var(--toggle-padding);
-  cursor: default;
 }
 
 li:hover {
-  border: solid 0.2rem white;
-  border-radius: var(--border-radius);
-  margin: -0.2rem 0;
+  padding: var(--line);
+  border: solid var(--line) var(--color4);
+  cursor: pointer;
 }
 
 li:active {
-  border: solid 0.2rem white;
-  transform: translate(0, 0.2rem);
-  background-color: #414141;
+  background-color: var(--color3);
+  transform: translate(0, var(--line));
 }
 
-.hamburger-lines {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+.toggle-block {
+  position: relative;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  background-color: var(--color1);
+  z-index: 2;
+}
+
+.checkbox {
+  margin: 0;
+  opacity: 0;
+  z-index: 3;
+  cursor: pointer;
 }
 
 .line {
-  --line-length: calc(var(--togle-size) - var(--toggle-padding) * 2);
-  --line-minor-offset: calc(var(--toggle-line-height) * sin(45deg));
-  --line-major-offset: calc(var(--line-length) * sin(45deg) / 4);
-  --line-y-offset: calc(var(--line-major-offset) - var(--line-minor-offset));
-  --line-x-offset: calc(var(--line-major-offset));
-  display: block;
-  height: var(--toggle-line-height);
-  width: 100%;
-  border-radius: var(--toggle-line-height);
-  background: #858181;
+  --diagonal-scale: calc(1 / var(--sin45));
+  position: absolute;
+  left: 25%;
+  width: var(--hsize);
+  height: var(--line);
+  background-color: var(--color2);
+  transform-origin: 0% var(--hline);
+  transition: transform 0.5s, width 0.5s;
 }
 
-.line1 {
-  transform-origin: 0% 0%;
-  transition: transform 0.4s ease-in-out;
+#line1 {
+  top: calc(25% - var(--hline));
 }
 
-.line2 {
-  transition: transform 0.2s ease-in-out;
+#line2 {
+  top: calc(50% - var(--hline));
 }
 
-.line3 {
-  transform-origin: 0% 100%;
-  transition: transform 0.4s ease-in-out;
+#line3 {
+  top: calc(75% - var(--hline));
 }
 
-/* based on https://codepen.io/alvarotrigo/pen/wvrzPWL */
-input[type="checkbox"]:checked ~ #toggle .line1 {
-  /* CSS trig will work in chrome 111. Already works in firefox */
-  /* Hardcoded values for now */
-  transform: translate(0.42426406871192845rem, 0.2474873734152916rem)
-    rotate(45deg);
-  /* transform: translate(var(--line-x-offset), var(--line-y-offset)) rotate(45deg); */
+input[type="checkbox"]:checked ~ .toggle-block #line1 {
+  transform: rotate(45deg) scale(var(--diagonal-scale), 1);
 }
 
-input[type="checkbox"]:checked ~ #toggle .line2 {
+input[type="checkbox"]:checked ~ .toggle-block #line2 {
   transform: scaleY(0);
 }
 
-input[type="checkbox"]:checked ~ #toggle .line3 {
-  transform: translate(0.42426406871192845rem, -0.2474873734152916rem)
-    rotate(-45deg);
-  /* transform: translate(var(--line-x-offset), calc(-1 * var(--line-y-offset)))
-    rotate(-45deg); */
+input[type="checkbox"]:checked ~ .toggle-block #line3 {
+  transform: rotate(-45deg) scale(var(--diagonal-scale), 1);
 }
 
 input[type="checkbox"]:not(:checked) ~ .list {
-  transform: translate(-110%);
+  transform: translate(-100%);
 }

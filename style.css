@@ -1,18 +1,36 @@
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
+  --unit: 1rem;
+
+  --size-unitless: 3;
+  --line-unitless: 0.25;
+  --menu-width-in-sizes: 5;
+
+  --color1: rgb(210, 210, 210);
+  --color2-r: 45;
+  --color3-r: 110;
+  --color4: white;
+
+  --color2: rgb(var(--color2-r) var(--color2-r) var(--color2-r));
+  --color3: rgb(var(--color3-r) var(--color3-r) var(--color3-r));
+
+  --size: calc(var(--size-unitless) * var(--unit));
+  --line: calc(var(--line-unitless) * var(--unit));
+
+  --dsize: calc(2 * var(--size));
+  --hsize: calc(var(--size) / 2);
+  --qsize: calc(var(--size) / 4);
+  --neg-size: calc(-1 * var(--size));
+
+  --dline: calc(2 * var(--line));
+  --hline: calc(var(--line) / 2);
+
+  --menu-width: calc(var(--menu-width-in-sizes) * var(--size));
+
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  color: var(--color4);
 }
 
 body {
@@ -37,10 +55,21 @@ canvas {
 }
 
 app-menu {
-  z-index: 1;
   position: absolute;
-  left: 0;
   top: 0;
-  width: 15rem;
+  left: 0;
+  width: var(--menu-width);
   height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: var(--line);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color4);
 }

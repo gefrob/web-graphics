@@ -2,22 +2,22 @@ import style from "./Menu.css?raw";
 
 const templateString = /* html */ `
   <div id="menu">
-    <input class="invis-checkbox" type="checkbox" id="checkbox" checked/>
-    <div id="toggle">
-      <div class="hamburger-lines">
-        <span class="line line1"></span>
-        <span class="line line2"></span>
-        <span class="line line3"></span>
-      </div>
+    <input class="toggle-block checkbox" type="checkbox" id="checkbox"/>
+    <div class="toggle-block">
+      <div class="line" id="line1"></div>
+      <div class="line" id="line2"></div>
+      <div class="line" id="line3"></div>
     </div>  
     <ul class="list"></ul>
   </div>
 `;
 
 const menuSelectedEvent = "menu-item-selected";
+const menuToggleEvent = "menu-toggle";
 
 interface MenuEventMap<T> extends HTMLElementEventMap {
   [menuSelectedEvent]: CustomEvent<T>;
+  [menuToggleEvent]: CustomEvent<boolean>;
 }
 
 class MenuComponent<T> extends HTMLElement {
@@ -28,6 +28,10 @@ class MenuComponent<T> extends HTMLElement {
     template.innerHTML = `<style>${style}</style> ${templateString}`;
 
     MenuComponent.Template = template;
+  }
+
+  static get observedAttributes() {
+    return ["active"];
   }
 
   #list: HTMLUListElement;
@@ -61,6 +65,14 @@ class MenuComponent<T> extends HTMLElement {
     this.#checkbox = templateNodeCopy.querySelector(
       "#checkbox"
     ) as HTMLInputElement;
+
+    this.#checkbox.addEventListener("click", () => {
+      this.dispatchEvent(
+        new CustomEvent<boolean>(menuToggleEvent, {
+          detail: this.#checkbox.checked
+        })
+      );
+    });
 
     shadowRoot.appendChild(templateNodeCopy);
   }
@@ -122,6 +134,20 @@ class MenuComponent<T> extends HTMLElement {
 
   toggle(): void {
     this.setVisibility(!this.#visible);
+  }
+
+  attributeChangedCallback(
+    name: string,
+    _: null | string,
+    newValue: null | string
+  ) {
+    if (!this.shadowRoot) {
+      return;
+    }
+
+    if (name === "active") {
+      this.#checkbox.checked = newValue !== null;
+    }
   }
 
   addEventListener<K extends keyof MenuEventMap<T>>(

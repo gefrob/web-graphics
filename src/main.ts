@@ -54,9 +54,13 @@ menu.addEventListener("menu-item-selected", (e) => {
   startScene(e.detail);
 });
 
+menu.addEventListener("menu-toggle", () => {
+  menu.toggleAttribute("active");
+});
+
 document.addEventListener("keydown", (e) => {
   if (e.code === "Backslash" && menu.selectedItem !== null) {
-    menu.toggle();
+    menu.toggleAttribute("active");
   }
 });
 
