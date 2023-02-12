@@ -9,6 +9,14 @@
   <body>
     <app-menu active></app-menu>
     <xr-panel></xr-panel> 
+    <input id="info-checkbox" class="info-btn" type="checkbox" disabled/>
+    <button id="info-toggle" class="info-btn">i</button>
+    <div id="info" class="info-panel">
+      <div id="info-content"></div>
+    </div>
+    <div id="error" class="info-panel invisible">
+      <div id="error-content"></div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
