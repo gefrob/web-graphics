@@ -1,8 +1,10 @@
 import { Application } from "./Application";
 import { MenuComponent } from "./ui/menu/Menu";
+import { XRPanelComponent } from "./ui/xr-panel/XRPanelComponent";
 import { SceneName, Scenes } from "./SceneList";
 
 customElements.define("app-menu", MenuComponent);
+customElements.define("xr-panel", XRPanelComponent);
 
 const app = new Application();
 

@@ -73,3 +73,13 @@ app-menu {
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--color4);
 }
+
+xr-panel {
+  top: 50%;
+  position: absolute;
+  right: 0;
+  width: var(--size);
+  height: calc(var(--dsize) + var(--line));
+  translate: 0 -50%;
+  z-index: 1;
+}

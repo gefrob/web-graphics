@@ -1,0 +1,46 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+}
+
+.button {
+  box-sizing: border-box;
+  width: var(--size);
+  height: var(--size);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: solid var(--line) var(--color1);
+  background-color: var(--color2);
+  color: var(--color4);
+  font-weight: bolder;
+  font-size: larger;
+
+  transition-property: border-width, border-color, background-color;
+  transition-duration: 0.1s;
+  transition-timing-function: ease-out;
+}
+
+.button:hover {
+  border-width: var(--hline);
+  cursor: pointer;
+}
+
+.button:active {
+  background-color: var(--color3);
+  border-color: var(--color4);
+}
+
+.invisible {
+  display: none;
+}
+
+.panel:has(#vr:is(.invisible)),
+.panel:has(#ar:is(.invisible)) {
+  justify-content: center;
+}
